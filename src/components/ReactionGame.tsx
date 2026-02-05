@@ -49,65 +49,132 @@ type GameState = 'idle' | 'waiting' | 'ready' | 'result'  | 'tooEarly';
 
     //util functions for styling
 
-    const getBackgroundColor = () => {
+    const getLightStates = () => {
       switch (gameState) {
         case 'idle':
-          return '#3b82f6';  // blue
+          return { red: false, yellow: false, green: false };
         case 'waiting':
-          return '#ef4444';  // red
+          return { red: true, yellow: false, green: false };
         case 'ready':
-          return '#22c55e';  // green
+          return { red: false, yellow: false, green: true };
         case 'result':
-          return '#8b5cf6';  // purple
+          return { red: false, yellow: true, green: false };
         case 'tooEarly':
-          return '#f97316';  // orange
+          return { red: true, yellow: false, green: false };
+        default:
+          return { red: false, yellow: false, green: false };
       }
     };
 
-    const getMessage = () => {
+    const getTopMessage = () => {
       switch (gameState) {
         case 'idle':
-          return '👆 Click to Start';
+          return 'Click to Start';
         case 'waiting':
-          return '⏳ Wait for green...';
+          return 'Wait for green light...';
         case 'ready':
-          return '🎯 CLICK NOW!';
+          return 'CLICK NOW!';
         case 'result':
-
-          return (
-            <div>
-              <div style={{ fontSize: '2.5rem', marginBottom: '20px' }}>⚡</div>
-              <div style={{ fontSize: '1.5rem' }}>Your Time: {reactionTime}ms</div>
-              {highScore && <div style={{ fontSize: '1.2rem', marginTop: '15px' }}>🏆 Best: {highScore}ms</div>}
-              <div style={{ fontSize: '1rem', marginTop: '30px', opacity: 0.8 }}>Click to play again</div>
-            </div>
-          );
+          return 'Result';
         case 'tooEarly':
-          return '❌ Too Early! Click to try again';
+          return 'Too Early!';
       }
     };
+
+    const getBottomMessage = () => {
+      if (gameState === 'result') {
+        return (
+          <div>
+            <div style={{ fontSize: '1.8rem', marginBottom: '10px' }}>⚡ {reactionTime}ms</div>
+            {highScore && <div style={{ fontSize: '1.2rem' }}>🏆 Best: {highScore}ms</div>}
+          </div>
+        );
+      }
+      return null;
+    };
+
+  const lights = getLightStates();
 
   return (
     <div 
       onClick={handleClick}
       style={{
-        backgroundColor: getBackgroundColor(),
-        color: 'white',
+        backgroundColor: '#1e293b',
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: '2rem',
-        fontWeight: 'bold',
         cursor: 'pointer',
         userSelect: 'none',
-        transition: 'background-color 0.3s ease',
-        textAlign: 'center',
-        padding: '20px'
+        fontFamily: 'system-ui, -apple-system, sans-serif'
       }}
     >
-      {getMessage()}
+      {/* Top Message */}
+      <div style={{
+        color: 'white',
+        fontSize: '2rem',
+        fontWeight: 'bold',
+        marginBottom: '40px',
+        textAlign: 'center'
+      }}>
+        {getTopMessage()}
+      </div>
+
+      {/* Traffic Light Housing */}
+      <div style={{
+        backgroundColor: '#0f172a',
+        borderRadius: '30px',
+        padding: '30px 50px',
+        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+        border: '4px solid #334155'
+      }}>
+        {/* Red Light */}
+        <div style={{
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          backgroundColor: lights.red ? '#ef4444' : '#450a0a',
+          marginBottom: '25px',
+          transition: 'all 0.3s ease',
+          boxShadow: lights.red ? '0 0 40px #ef4444, 0 0 80px #ef4444' : 'inset 0 4px 10px rgba(0,0,0,0.5)',
+          border: '3px solid #1e293b'
+        }} />
+
+        {/* Yellow Light */}
+        <div style={{
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          backgroundColor: lights.yellow ? '#fbbf24' : '#451a03',
+          marginBottom: '25px',
+          transition: 'all 0.3s ease',
+          boxShadow: lights.yellow ? '0 0 40px #fbbf24, 0 0 80px #fbbf24' : 'inset 0 4px 10px rgba(0,0,0,0.5)',
+          border: '3px solid #1e293b'
+        }} />
+
+        {/* Green Light */}
+        <div style={{
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          backgroundColor: lights.green ? '#22c55e' : '#052e16',
+          transition: 'all 0.3s ease',
+          boxShadow: lights.green ? '0 0 40px #22c55e, 0 0 80px #22c55e' : 'inset 0 4px 10px rgba(0,0,0,0.5)',
+          border: '3px solid #1e293b'
+        }} />
+      </div>
+
+      {/* Bottom Message/Results */}
+      <div style={{
+        color: 'white',
+        fontSize: '1.5rem',
+        marginTop: '40px',
+        textAlign: 'center',
+        minHeight: '80px'
+      }}>
+        {getBottomMessage()}
+      </div>
     </div>
   )
 }
