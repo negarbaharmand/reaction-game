@@ -1,38 +1,51 @@
-# Workshop: "React" ⚡
+# Traffic Light Reaction Game 🚦
 
-**Mål:** Bygg ett reaktionstidsspel där spelaren väntar på att en ruta blir grön och klickar så snabbt som möjligt. Syftet är att lära sig använda `useState` och `useEffect`.
+A simple and fun reaction time game built with React and TypeScript. Test how fast you can click when the traffic light turns green!
 
-## Steg 1: Typdefinitioner
-Definiera en `type` för spelets olika tillstånd (idle/waiting/ready/result/tooEarly).
+## 🎮 [Play Demo](https://trafiklight.netlify.app/)
 
-## Steg 2: Grundläggande struktur
-Skapa komponenten för spelplanen (en klickbar ruta med meddelande).
+## How to Play
 
-## Steg 3: useState med TypeScript
-Lägg till states med följande typning:
-- Spelets tillstånd (din egen type)
-- Starttid (`number | null`)
-- Reaktionstid (`number | null`)
-- Highscore (`number | null`)
+1. **Click to start** - All lights are dim
+2. **Wait** - Red light turns on (don't click yet!)
+3. **Click now!** - Green light turns on (click as fast as you can!)
+4. **See your results** - Yellow light shows your reaction time and best score
 
-## 👆 Steg 4: Klickhantering
-Implementera `handleClick` som hanterar olika beteenden beroende på vilket state spelet är i.
+⚠️ If you click too early during the red light, you'll need to start over!
 
-## ⏱️ Steg 5: useEffect för timern
-Skapa en effect som:
-- Lyssnar på när spelaren väntar
-- Startar en timer med slumpmässig fördröjning
-- **Cleanup:** Rensar timern vid för tidig klick eller unmount
+## Features
 
-## 🎨 Steg 6: Visuell feedback
-Ändra bakgrundsfärg och meddelande baserat på spelets state.
+- 🚦 Realistic traffic light design with glowing effects
+- ⚡ Measures reaction time in milliseconds
+- 🏆 Tracks your best score
+- 🎨 Smooth animations and transitions
+- 📱 Responsive full-screen design
 
-## 🥸 Tekniska koncept
-- `useState<Type>()` = typat state
-- `type` = definierar tillåtna värden
-- `useEffect` = gör något när state ändras
-- Cleanup-funktionen = städa upp efter dig (viktigt med timers!)
+## Tech Stack
 
-## 👥 Diskutera
-- Hur skiljer sig useState från en vanlig variabel?
-- När körs useEffect-funktionen? Vad styr det?
+- React 18
+- TypeScript
+- Vite
+- CSS-in-JS (inline styles)
+
+## Running Locally
+
+```bash
+# Install dependencies
+bun install
+
+# Start dev server
+bun dev
+```
+
+## Concepts Demonstrated
+
+- `useState` with TypeScript for state management
+- `useEffect` for side effects and cleanup functions
+- Union types for game states
+- Conditional rendering based on state
+- Event handling and click interactions
+
+---
+
+Built with ❤️ as a React learning project
