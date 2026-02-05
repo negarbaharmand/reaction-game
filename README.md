@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# Workshop: "React" ⚡
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Mål:** Bygg ett reaktionstidsspel där spelaren väntar på att en ruta blir grön och klickar så snabbt som möjligt. Syftet är att lära sig använda `useState` och `useEffect`.
 
-Currently, two official plugins are available:
+## Steg 1: Typdefinitioner
+Definiera en `type` för spelets olika tillstånd (idle/waiting/ready/result/tooEarly).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Steg 2: Grundläggande struktur
+Skapa komponenten för spelplanen (en klickbar ruta med meddelande).
 
-## React Compiler
+## Steg 3: useState med TypeScript
+Lägg till states med följande typning:
+- Spelets tillstånd (din egen type)
+- Starttid (`number | null`)
+- Reaktionstid (`number | null`)
+- Highscore (`number | null`)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 👆 Steg 4: Klickhantering
+Implementera `handleClick` som hanterar olika beteenden beroende på vilket state spelet är i.
 
-## Expanding the ESLint configuration
+## ⏱️ Steg 5: useEffect för timern
+Skapa en effect som:
+- Lyssnar på när spelaren väntar
+- Startar en timer med slumpmässig fördröjning
+- **Cleanup:** Rensar timern vid för tidig klick eller unmount
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🎨 Steg 6: Visuell feedback
+Ändra bakgrundsfärg och meddelande baserat på spelets state.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🥸 Tekniska koncept
+- `useState<Type>()` = typat state
+- `type` = definierar tillåtna värden
+- `useEffect` = gör något när state ändras
+- Cleanup-funktionen = städa upp efter dig (viktigt med timers!)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 👥 Diskutera
+- Hur skiljer sig useState från en vanlig variabel?
+- När körs useEffect-funktionen? Vad styr det?
